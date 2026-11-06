@@ -34,8 +34,9 @@ npm run lint
 
 ### Фотографии
 
-Сейчас стоят фото-заглушки с Unsplash. Чтобы поставить свои, положите файлы в `public/photos/`
-и пропишите пути в `PHOTOS`, например `heroSea: "/photos/beach.jpg"`.
+Фото взяты из Instagram [@olimpiec_anapa](https://www.instagram.com/olimpiec_anapa/), сжаты до 1080 px
+и лежат в `public/photos/`. Чтобы заменить снимок, положите новый файл туда же и пропишите имя в `PHOTOS`
+(`lib/content.ts`), например `beachRun: photo("beach-run")`.
 
 ## Логотип
 

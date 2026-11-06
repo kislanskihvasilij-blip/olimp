@@ -29,8 +29,8 @@ export function About() {
 
         <div className="relative">
           <ParallaxImage
-            src={PHOTOS.kidField}
-            alt="Ребёнок бежит по полю в лучах солнца"
+            src={PHOTOS.girlSea}
+            alt="Улыбающаяся девочка на пляже «Олимпийца»"
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="aspect-[4/5] w-full"
             strength={70}

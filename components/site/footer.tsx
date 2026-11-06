@@ -72,7 +72,7 @@ export function Footer() {
 
       <Container className="flex flex-col gap-2 border-t border-paper/15 py-6 text-xs text-paper/45 md:flex-row md:justify-between">
         <span>© 2026 {SITE.short}</span>
-        <span>Фотографии-заглушки: Unsplash</span>
+        <span>Фото: Instagram @olimpiec_anapa</span>
       </Container>
     </footer>
   );

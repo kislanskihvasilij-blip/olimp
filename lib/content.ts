@@ -2,51 +2,39 @@
  * Контент сайта ДК «Олимпиец» (Анапа).
  *
  * Факты из профиля @olimpiec_anapa: более 5 га территории, 300 м до моря
- * и собственного пляжа, спортгородок, 5-разовое питание.
+ * и собственного пляжа, спортгородок с двумя стадионами, 5-разовое питание,
+ * ежегодные «Олимпийские игры».
  *
  * ВНИМАНИЕ: телефон, e-mail, цены, даты смен и отзывы — демонстрационные.
  * Перед запуском замените их реальными данными комплекса.
  */
 
-/** Фото Unsplash с базовой обрезкой; ресайз под экран делает next/image. */
-const unsplash = (id: string, width = 2400): string =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&q=80`;
+/** Фото из Instagram @olimpiec_anapa, сжатые до 1080 px, лежат в public/photos. */
+const photo = (name: string): string => `/photos/${name}.jpg`;
 
-const HERO_PHOTO_ID = "1473116763249-2faaef81ccda";
-const HERO_TEXTURE_WIDTH = 1600;
-
-/**
- * Все фотографии сайта в одном месте.
- * Чтобы поставить реальные фото «Олимпийца», положите файлы в public/photos
- * и замените значение, например: heroSea: "/photos/beach.jpg".
- */
+/** Все фотографии сайта в одном месте: чтобы заменить снимок, положите файл в public/photos. */
 export const PHOTOS = {
-  heroSea: unsplash(HERO_PHOTO_ID),
-  kidField: unsplash("1489710437720-ebb67ec84dd2"),
-  girlSea: unsplash("1471286174890-9c112ffca5b4"),
-  forest: unsplash("1441974231531-c6227db76b6e"),
-  lights: unsplash("1492684223066-81342ee5ff30"),
-  park: unsplash("1519331379826-f10be5486c6f"),
-  swimmer: unsplash("1530549387789-4c1017266635"),
-  runner: unsplash("1461896836934-ffe607ba8211"),
-  football: unsplash("1574629810360-7efbbe195018"),
-  basketball: unsplash("1546519638-68e109498ffc"),
-  tennis: unsplash("1622279457486-62dcc4a431d6"),
-  climbing: unsplash("1522163182402-834f871fd851"),
-  doctor: unsplash("1576091160399-112ba8d25d1d"),
-  friends: unsplash("1529156069898-49953e39b3ac"),
-  campfire: unsplash("1475483768296-6163e08872a1"),
-  classroom: unsplash("1509062522246-3755977927d7"),
-  drawing: unsplash("1516627145497-ae6968895b74"),
-  stage: unsplash("1503095396549-807759245b35"),
-  concert: unsplash("1514525253161-7a46d19cd819"),
+  beachRun: photo("beach-run"),
+  girlSea: photo("girl-sea"),
+  beachPlay: photo("beach-play"),
+  territory: photo("territory"),
+  eveningSquare: photo("evening-square"),
+  park: photo("park"),
+  football: photo("football"),
+  olympicGames: photo("olympic-games"),
+  stadium: photo("stadium"),
+  beachWarmup: photo("beach-warmup"),
+  dance: photo("dance"),
+  cheer: photo("cheer"),
+  group: photo("group"),
+  fireShow: photo("fire-show"),
+  education: photo("education"),
+  vocal: photo("vocal"),
+  stageShow: photo("stage-show"),
 } as const;
 
-/**
- * Фон hero для WebGL-ряби. Текстура 1600px: под рябью детали не видны, а мобильным легче.
- * Своё фото — укажите путь, например "/photos/hero.jpg" (внешний URL должен отдаваться с CORS).
- */
-export const HERO_PHOTO = unsplash(HERO_PHOTO_ID, HERO_TEXTURE_WIDTH);
+/** Фон hero для WebGL-ряби (локальный файл — без CORS-ограничений). */
+export const HERO_PHOTO = PHOTOS.beachRun;
 
 export const SITE = {
   name: "Олимпиец",
@@ -82,11 +70,11 @@ export type Shift = { title: string; dates: string; tag: string; photo: string }
 
 export const SHIFTS: Shift[] = [
   { title: "Олимпийский старт", dates: "01.06 — 21.06", tag: "лето", photo: PHOTOS.football },
-  { title: "Морской бриз", dates: "24.06 — 14.07", tag: "лето", photo: PHOTOS.swimmer },
-  { title: "Звёздный экспресс", dates: "17.07 — 06.08", tag: "лето", photo: PHOTOS.concert },
-  { title: "Чемпионы лета", dates: "09.08 — 29.08", tag: "лето", photo: PHOTOS.runner },
-  { title: "Золотая осень", dates: "26.10 — 04.11", tag: "осень", photo: PHOTOS.forest },
-  { title: "Новогодняя сказка", dates: "28.12 — 08.01", tag: "зима", photo: PHOTOS.lights },
+  { title: "Морской бриз", dates: "24.06 — 14.07", tag: "лето", photo: PHOTOS.beachRun },
+  { title: "Звёздный экспресс", dates: "17.07 — 06.08", tag: "лето", photo: PHOTOS.stageShow },
+  { title: "Чемпионы лета", dates: "09.08 — 29.08", tag: "лето", photo: PHOTOS.olympicGames },
+  { title: "Золотая осень", dates: "26.10 — 04.11", tag: "осень", photo: PHOTOS.territory },
+  { title: "Новогодняя сказка", dates: "28.12 — 08.01", tag: "зима", photo: PHOTOS.eveningSquare },
   { title: "Весенний разгон", dates: "23.03 — 01.04", tag: "весна", photo: PHOTOS.park },
 ];
 
@@ -109,8 +97,8 @@ export const SEASONS: Season[] = [
     title: "Летние каникулы",
     months: "июнь — август",
     text: "Самое жаркое время для приключений: море в 300 метрах, спорт, вечерние костры и смены, после которых ребёнок возвращается окрепшим.",
-    photo: PHOTOS.girlSea,
-    alt: "Девочка в спортивной футболке на берегу моря",
+    photo: PHOTOS.beachPlay,
+    alt: "Девочки в жёлтых кепках играют в песке на пляже",
   },
   {
     key: "autumn",
@@ -118,8 +106,8 @@ export const SEASONS: Season[] = [
     title: "Осенние каникулы",
     months: "конец октября",
     text: "Тёплые встречи и новые открытия: программы для творческого и интеллектуального роста, чтобы вернуться к учёбе с новыми силами.",
-    photo: PHOTOS.forest,
-    alt: "Солнечный осенний лес",
+    photo: PHOTOS.territory,
+    alt: "Тенистая аллея на территории «Олимпийца»",
   },
   {
     key: "winter",
@@ -127,8 +115,8 @@ export const SEASONS: Season[] = [
     title: "Новогодние каникулы",
     months: "28 декабря — 8 января",
     text: "Утренники, встреча с Дедом Морозом, ёлка и сюрпризы каждый день — время чудес и настоящей сказки для каждого ребёнка.",
-    photo: PHOTOS.lights,
-    alt: "Праздничные огни и искры",
+    photo: PHOTOS.eveningSquare,
+    alt: "Вечерний праздник на площади лагеря",
   },
   {
     key: "spring",
@@ -137,7 +125,7 @@ export const SEASONS: Season[] = [
     months: "конец марта",
     text: "Свежий воздух, просыпающаяся природа и яркая программа — лучший момент, чтобы перезагрузиться и набраться здоровья.",
     photo: PHOTOS.park,
-    alt: "Зелёный весенний парк",
+    alt: "Ребята в зелёном парке на территории комплекса",
   },
 ];
 
@@ -197,8 +185,8 @@ export const PROGRAMS: Program[] = [
     text: "Море, солнце, режим и медицинское сопровождение — программа, после которой ребёнок возвращается окрепшим.",
     price: "от 48 900 ₽",
     duration: "21 день",
-    photo: PHOTOS.doctor,
-    alt: "Врач со стетоскопом",
+    photo: PHOTOS.cheer,
+    alt: "Ребята в кепках радуются на пляже",
   },
   {
     index: "02",
@@ -206,8 +194,8 @@ export const PROGRAMS: Program[] = [
     text: "Вожатые, отрядные дела, спорт, дискотеки и общелагерные события — классическая смена, о которой рассказывают весь год.",
     price: "от 39 900 ₽",
     duration: "21 день",
-    photo: PHOTOS.friends,
-    alt: "Друзья сидят вместе на закате",
+    photo: PHOTOS.group,
+    alt: "Отряд «Олимпийца» на общей фотографии",
   },
   {
     index: "03",
@@ -215,8 +203,8 @@ export const PROGRAMS: Program[] = [
     text: "Спортивные сборы, тематические выезды и школьные поездки: подстроим программу, питание и расписание под ваш запрос.",
     price: "по запросу",
     duration: "от 5 дней",
-    photo: PHOTOS.football,
-    alt: "Футбольный мяч на поле",
+    photo: PHOTOS.stadium,
+    alt: "Стадион спортгородка «Олимпийца»",
   },
   {
     index: "04",
@@ -224,21 +212,21 @@ export const PROGRAMS: Program[] = [
     text: "Короткие смены на осенние, зимние и весенние каникулы — отдых и праздники без потери учебного ритма.",
     price: "от 24 900 ₽",
     duration: "10 дней",
-    photo: PHOTOS.campfire,
-    alt: "Костёр вечером",
+    photo: PHOTOS.fireShow,
+    alt: "Вечернее огненное шоу на открытии игр",
   },
 ];
 
 export const SPORTS: { title: string; note: string; photo: string; alt: string }[] = [
-  { title: "Плавание", note: "в море с инструктором", photo: PHOTOS.swimmer, alt: "Пловец в воде" },
-  { title: "Лёгкая атлетика", note: "старты и эстафеты", photo: PHOTOS.runner, alt: "Бегун на старте беговой дорожки" },
-  { title: "Футбол", note: "турнир отрядов", photo: PHOTOS.football, alt: "Футбольный мяч на газоне" },
-  { title: "Баскетбол", note: "стритбол 3×3", photo: PHOTOS.basketball, alt: "Баскетбольный мяч у кольца" },
-  { title: "Теннис", note: "ракетка для каждого", photo: PHOTOS.tennis, alt: "Теннисист на корте" },
-  { title: "Активный отдых", note: "походы и экскурсии", photo: PHOTOS.climbing, alt: "Скалолаз на скале" },
+  { title: "Море", note: "плавание с инструктором", photo: PHOTOS.beachRun, alt: "Ребята бегут по пляжу к морю" },
+  { title: "Олимпийские игры", note: "каждый год", photo: PHOTOS.olympicGames, alt: "Мальчик на церемонии Олимпийских игр лагеря" },
+  { title: "Футбол", note: "турнир отрядов", photo: PHOTOS.football, alt: "Футбольная тренировка на поле спортгородка" },
+  { title: "Спортгородок", note: "два стадиона", photo: PHOTOS.stadium, alt: "Стадион спортгородка «Олимпийца»" },
+  { title: "Зарядка у моря", note: "каждое утро", photo: PHOTOS.beachWarmup, alt: "Массовая зарядка на пляже" },
+  { title: "Танцы", note: "флешмобы и батлы", photo: PHOTOS.dance, alt: "Девочки танцуют на площадке" },
 ];
 
-export const SPORT_WORDS = ["плавание", "футбол", "баскетбол", "теннис", "лёгкая атлетика", "волейбол", "эстафеты", "зарядка"];
+export const SPORT_WORDS = ["плавание", "футбол", "олимпийские игры", "эстафеты", "волейбол", "зарядка", "танцы"];
 
 export const CLUBS = ["робототехника", "шахматы", "театр", "вокал", "рисование", "английский", "журналистика", "экология", "хореография"];
 
@@ -246,20 +234,20 @@ export const KNOWLEDGE: { title: string; text: string; photo: string; alt: strin
   {
     title: "Учёба без скуки",
     text: "Занятия в течение смены: школьные предметы, языки и основы перспективных профессий в формате игры.",
-    photo: PHOTOS.classroom,
-    alt: "Дети на занятии в классе",
+    photo: PHOTOS.education,
+    alt: "Ребята с плакатами «Мы победим» на мероприятии",
   },
   {
-    title: "Творческая мастерская",
-    text: "Рисование, лепка, дизайн и рукоделие — мастер-классы, после которых домой едут собственные работы.",
-    photo: PHOTOS.drawing,
-    alt: "Дети рисуют за столом",
+    title: "Вокал и творчество",
+    text: "Вокал, танцы, рисование и рукоделие — студии, где каждый находит свой голос, а домой едут собственные работы.",
+    photo: PHOTOS.vocal,
+    alt: "Вожатая поёт в микрофон на празднике",
   },
   {
     title: "Сцена «Олимпийца»",
     text: "Театральная студия, вокал и хореография. Каждая смена заканчивается большим концертом.",
-    photo: PHOTOS.stage,
-    alt: "Театральная сцена с красным занавесом",
+    photo: PHOTOS.stageShow,
+    alt: "Ребята в костюмах на вечернем представлении",
   },
 ];
 

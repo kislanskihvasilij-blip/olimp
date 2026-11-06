@@ -38,7 +38,7 @@ export function Hero() {
           waterDistortion={0.018}
           maxDpr={1.5}
         />
-        <div className="absolute inset-0 bg-ink/35" />
+        <div className="absolute inset-0 bg-ink/50" />
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-ink via-ink/70 to-transparent" />
       </div>
 
