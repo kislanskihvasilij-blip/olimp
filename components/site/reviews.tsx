@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function Reviews() {
   return (
-    <section id="otzyvy" data-chapter="Отзывы" data-chapter-index="09" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="otzyvy" data-chapter="Отзывы" data-chapter-index="09" className="border-t border-paper/10 py-16 md:py-36">
       <Container>
         <SectionHeading index="09" kicker="Что о нас говорят" lines={["Отзывы", "родителей"]} note="читаем каждый" />
         <ul className="mt-16 grid gap-4 md:grid-cols-2 md:pb-12">
@@ -25,7 +25,7 @@ export function Reviews() {
                     </span>
                     <span className="flex flex-col gap-1">
                       <span className="text-sm">{review.name}</span>
-                      <span className="font-cond text-xs uppercase tracking-[0.12em] text-paper/50">{review.meta}</span>
+                      <span className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-paper/50">{review.meta}</span>
                     </span>
                   </figcaption>
                 </figure>

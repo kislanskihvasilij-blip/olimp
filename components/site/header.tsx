@@ -30,8 +30,8 @@ export function SiteHeader() {
           <a href="#top" aria-label={`${SITE.short} — наверх`}>
             <Logo isAnimated />
           </a>
-          <span className="hidden font-cond text-xs uppercase leading-[0.88] tracking-[0.16em] text-paper/60 lg:block">
-            {SITE.season} · {SITE.city}
+          <span className="hidden font-cond text-[0.8rem] uppercase leading-[0.88] tracking-[0.16em] text-paper/60 lg:block">
+            {SITE.city} · Черноморское побережье
           </span>
           <div className="flex items-center gap-6">
             <a href={SITE.phoneHref} className="hidden text-sm text-paper/80 transition-colors hover:text-paper md:block">
@@ -116,7 +116,7 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
                   onClick={handleNavigate(item.href)}
                   className="group flex items-baseline gap-4 border-b border-paper/10 py-2 font-serif text-[clamp(2rem,5vw,4.2rem)] font-light italic leading-none transition-colors hover:text-blaze"
                 >
-                  <span className="font-cond text-xs not-italic text-paper/40">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-cond text-[0.8rem] not-italic text-paper/40">{String(i + 1).padStart(2, "0")}</span>
                   <span className="transition-transform duration-500 group-hover:translate-x-3">{item.label}</span>
                 </a>
               </motion.li>

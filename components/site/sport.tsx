@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function Sport() {
   return (
-    <section id="sport" data-chapter="Спорт" data-chapter-index="06" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="sport" data-chapter="Спорт" data-chapter-index="06" className="border-t border-paper/10 py-16 md:py-36">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
           <SectionHeading
@@ -16,7 +16,7 @@ export function Sport() {
             note="тренировки каждый день"
           />
           <Reveal className="max-w-md lg:justify-self-end">
-            <p className="text-[0.95rem] leading-[1.65] text-paper/70">
+            <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
               Спортгородок с двумя стадионами и море в шаге от корпусов. Тренеры помогут подтянуть технику, а «Олимпийские
               игры», которые открываются в «Олимпийце» каждый год, — почувствовать вкус настоящей победы.
             </p>
@@ -48,7 +48,7 @@ export function Sport() {
                   </div>
                   <figcaption className="flex flex-col gap-1 border-b border-paper/15 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
                     <span className="text-sm uppercase tracking-[0.02em] md:text-base">{sport.title}</span>
-                    <span className="font-cond text-xs uppercase tracking-[0.12em] text-paper/55">{sport.note}</span>
+                    <span className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-paper/55">{sport.note}</span>
                   </figcaption>
                 </figure>
               </Reveal>

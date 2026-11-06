@@ -8,11 +8,11 @@ const onest = Onest({ variable: "--font-onest", subsets: ["latin", "cyrillic"], 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin", "cyrillic"],
-  weight: ["300", "400"],
+  weight: ["300"],
   style: ["normal", "italic"],
   display: "swap",
 });
-const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin", "cyrillic"], weight: ["400", "500"], display: "swap" });
+const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin", "cyrillic"], weight: ["400"], display: "swap" });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin", "cyrillic"], weight: ["500"], display: "swap" });
 const unbounded = Unbounded({ variable: "--font-unbounded", subsets: ["latin", "cyrillic"], weight: ["600", "900"], display: "swap" });
 

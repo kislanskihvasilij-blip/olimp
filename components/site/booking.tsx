@@ -83,7 +83,7 @@ function BookingForm() {
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-6 self-start bg-ink p-6 text-paper md:p-10">
-      <p className="font-cond text-xs uppercase tracking-[0.12em] text-paper/50">Заявка на путёвку</p>
+      <p className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-paper/50">Заявка на путёвку</p>
       <Field id="lead-name" label="Имя родителя" error={errors.name}>
         <input
           id="lead-name"
@@ -193,7 +193,7 @@ type FieldProps = { id: string; label: string; error?: string; children: ReactNo
 function Field({ id, label, error, children }: FieldProps) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-cond text-xs uppercase tracking-[0.12em] text-paper/60">
+      <label htmlFor={id} className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-paper/60">
         {label}
       </label>
       {children}

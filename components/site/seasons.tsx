@@ -5,7 +5,7 @@ import { SEASONS } from "@/lib/content";
 
 export function Seasons() {
   return (
-    <section id="kanikuly" data-chapter="Каникулы" data-chapter-index="02" className="py-24 md:py-36">
+    <section id="kanikuly" data-chapter="Каникулы" data-chapter-index="02" className="py-16 md:py-36">
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
           <SectionHeading
@@ -15,7 +15,7 @@ export function Seasons() {
             note="бронируйте заранее"
           />
           <Reveal className="max-w-md md:justify-self-end">
-            <p className="text-[0.95rem] leading-[1.65] text-paper/70">
+            <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
               Четыре сезона — четыре настроения. Летом — море и спорт, осенью — открытия, зимой — новогодняя сказка, весной —
               перезагрузка перед финалом учебного года.
             </p>
@@ -35,14 +35,14 @@ export function Seasons() {
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover grayscale-[40%] transition duration-[1200ms] ease-out group-hover:scale-105 group-hover:grayscale-0"
                     />
-                    <span className="absolute left-4 top-4 bg-ink/70 px-2 py-1 font-cond text-xs uppercase tracking-[0.14em] text-paper">
+                    <span className="absolute left-4 top-4 bg-ink/70 px-2 py-1 font-cond text-[0.8rem] uppercase tracking-[0.14em] text-paper">
                       {String(i + 1).padStart(2, "0")} / {season.label}
                     </span>
                   </div>
                   <div className="flex flex-1 flex-col gap-4 p-5 md:p-6">
-                    <p className="font-cond text-xs uppercase leading-[0.88] tracking-[0.12em] text-blaze">{season.months}</p>
+                    <p className="font-cond text-[0.8rem] uppercase leading-[0.88] tracking-[0.12em] text-blaze">{season.months}</p>
                     <h3 className="font-serif text-[2rem] font-light italic leading-none">{season.title}</h3>
-                    <p className="text-sm leading-[1.6] text-paper/65">{season.text}</p>
+                    <p className="text-[0.95rem] leading-[1.6] md:text-base text-paper/65">{season.text}</p>
                     <a
                       href="#zayavka"
                       className="mt-auto inline-flex items-center gap-2 pt-2 text-sm uppercase tracking-[0.06em] text-paper/90 transition-colors hover:text-blaze"

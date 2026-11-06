@@ -5,7 +5,7 @@ import { FAQ, SITE } from "@/lib/content";
 
 export function Faq() {
   return (
-    <section id="voprosy" data-chapter="Вопросы" data-chapter-index="10" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="voprosy" data-chapter="Вопросы" data-chapter-index="10" className="border-t border-paper/10 py-16 md:py-36">
       <Container className="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
         <div className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
           <SectionHeading index="10" kicker="Ваши вопросы" lines={["Ответы", "на частые", "вопросы"]} note="не нашли ответ? звоните" />
@@ -23,7 +23,7 @@ export function Faq() {
                     <span>{item.q}</span>
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="pb-6 pl-10 text-sm leading-[1.7] text-paper/65">{item.a}</AccordionContent>
+                <AccordionContent className="pb-6 pl-10 text-[0.95rem] leading-[1.7] md:text-base text-paper/65">{item.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

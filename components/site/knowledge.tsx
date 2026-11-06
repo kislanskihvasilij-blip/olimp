@@ -5,7 +5,7 @@ import { CLUBS, KNOWLEDGE } from "@/lib/content";
 
 export function Knowledge() {
   return (
-    <section id="znaniya" data-chapter="Знания" data-chapter-index="07" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="znaniya" data-chapter="Знания" data-chapter-index="07" className="border-t border-paper/10 py-16 md:py-36">
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
           <SectionHeading
@@ -15,7 +15,7 @@ export function Knowledge() {
             note="кружки на любой вкус"
           />
           <Reveal className="max-w-md md:justify-self-end">
-            <p className="text-[0.95rem] leading-[1.65] text-paper/70">
+            <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
               На смене можно попробовать себя в новых профессиях: программы подбираем по возрасту, способностям и интересам
               ребёнка.
             </p>
@@ -38,7 +38,7 @@ export function Knowledge() {
                   </div>
                   <div className="border-b border-paper/15 py-5">
                     <h3 className="font-serif text-[1.9rem] font-light italic leading-none">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-[1.6] text-paper/65">{item.text}</p>
+                    <p className="mt-3 text-[0.95rem] leading-[1.6] md:text-base text-paper/65">{item.text}</p>
                   </div>
                 </article>
               </Reveal>

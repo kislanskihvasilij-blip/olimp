@@ -4,7 +4,7 @@ import { ABOUT_STATS, PHOTOS, SITE } from "@/lib/content";
 
 export function About() {
   return (
-    <section id="o-komplekse" data-chapter="О комплексе" data-chapter-index="03" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="o-komplekse" data-chapter="О комплексе" data-chapter-index="03" className="border-t border-paper/10 py-16 md:py-36">
       <Container className="grid gap-16 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
         <div className="flex flex-col gap-10">
           <SectionHeading
@@ -14,7 +14,7 @@ export function About() {
             note="300 метров до пляжа"
           />
           <Reveal>
-            <p className="max-w-xl text-base leading-[1.7] text-paper/80">
+            <p className="max-w-xl text-[1.05rem] leading-[1.7] text-paper/80 md:text-lg">
               «{SITE.name}» — детский оздоровительный комплекс в Анапе, где спорт, здоровье и дружба живут по одному расписанию.
               Зелёная территория больше пяти гектаров, собственный пляж в 300 метрах, спортгородок и пятиразовое питание, а рядом —
               команда вожатых, тренеров и медиков, которые знают, как сделать каникулы полезными и по-настоящему счастливыми.
@@ -44,7 +44,7 @@ export function About() {
           </div>
           <div className="absolute -top-6 right-2 text-blaze md:-right-6">
             <span className="relative block px-6 py-3 font-hand text-[1.6rem] leading-none text-paper">
-              {SITE.season.toLowerCase()}
+              свой пляж!
               <Scribble variant="circle" className="absolute inset-0 h-full w-full text-blaze" delay={0.3} />
             </span>
           </div>
@@ -55,7 +55,7 @@ export function About() {
         <dl className="grid grid-cols-2 gap-px border-y border-paper/15 bg-paper/15 lg:grid-cols-4">
           {ABOUT_STATS.map((stat) => (
             <div key={stat.label} className="flex flex-col gap-4 bg-ink px-4 py-8 md:px-6 md:py-10">
-              <dt className="order-2 font-cond text-xs uppercase leading-[1.2] tracking-[0.12em] text-paper/60">{stat.label}</dt>
+              <dt className="order-2 font-cond text-[0.8rem] uppercase leading-[1.2] tracking-[0.12em] text-paper/60">{stat.label}</dt>
               <dd className="order-1 font-serif text-[clamp(3.4rem,7vw,6.5rem)] font-light italic leading-none">
                 {stat.text ?? <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />}
               </dd>

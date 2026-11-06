@@ -242,3 +242,11 @@
     animation: none !important;
   }
 }
+
+/* Телефоны: зерно статичное и тоньше — без постоянной перерисовки слоя на весь экран. */
+@media (max-width: 767px) {
+  .grain::after {
+    animation: none;
+    opacity: 0.04;
+  }
+}

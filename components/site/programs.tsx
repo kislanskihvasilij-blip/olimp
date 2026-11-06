@@ -33,13 +33,13 @@ export function Programs() {
       data-chapter="Путёвки"
       data-chapter-index="05"
       onPointerMove={handlePointerMove}
-      className="border-t border-paper/10 py-24 md:py-36"
+      className="border-t border-paper/10 py-16 md:py-36"
     >
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
           <SectionHeading index="05" kicker="Путёвки" lines={["Всё для вас —", "в любое время", "года"]} note="выберите свою смену" />
           <Reveal className="max-w-md md:justify-self-end">
-            <p className="text-[0.95rem] leading-[1.65] text-paper/70">
+            <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
               Программы, в которых каждый найдёт своё: от оздоровительных смен у моря до спортивных сборов и коротких каникул
               межсезонья.
             </p>
@@ -63,10 +63,10 @@ export function Programs() {
                       {program.title}
                     </span>
                   </span>
-                  <span className="text-sm leading-[1.6] text-paper/60">{program.text}</span>
+                  <span className="text-[0.95rem] leading-[1.6] md:text-base text-paper/60">{program.text}</span>
                   <span className="flex flex-col items-start gap-1.5 md:items-end">
                     <span className="font-cond text-xl uppercase leading-none">{program.price}</span>
-                    <span className="font-cond text-xs uppercase tracking-[0.12em] text-paper/50">{program.duration}</span>
+                    <span className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-paper/50">{program.duration}</span>
                   </span>
                 </a>
               </Reveal>

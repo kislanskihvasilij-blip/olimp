@@ -10,8 +10,8 @@ const INFO_LINKS: { href: string; label: string }[] = [
   { href: "/brand", label: "Логотип и фирменный стиль" },
 ];
 
-const HEADING = "mb-5 font-cond text-xs uppercase tracking-[0.14em] text-paper/45";
-const LINK = "text-sm text-paper/75 transition-colors hover:text-blaze";
+const HEADING = "mb-5 font-cond text-[0.8rem] uppercase tracking-[0.14em] text-paper/45";
+const LINK = "text-[0.95rem] text-paper/75 transition-colors hover:text-blaze";
 
 export function Footer() {
   return (
@@ -19,7 +19,7 @@ export function Footer() {
       <Container className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="flex flex-col items-start gap-6">
           <Logo />
-          <p className="max-w-sm text-sm leading-[1.6] text-paper/60">
+          <p className="max-w-sm text-[0.95rem] leading-[1.6] md:text-base text-paper/60">
             {SITE.fullName}. {SITE.address}, Черноморское побережье.
           </p>
           <CtaLink href="#zayavka">Оставить заявку</CtaLink>

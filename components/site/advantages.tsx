@@ -11,22 +11,23 @@ import { cn } from "@/lib/utils";
  */
 export function Advantages() {
   return (
-    <section id="preimushchestva" data-chapter="Преимущества" data-chapter-index="04" className="border-t border-paper/10 py-24 md:py-36">
+    <section id="preimushchestva" data-chapter="Преимущества" data-chapter-index="04" className="border-t border-paper/10 py-16 md:py-36">
       <Container>
         <SectionHeading index="04" kicker="Почему выбирают нас" lines={["Четыре причины", "выбрать «Олимпиец»"]} note="и ещё сто мелочей" />
         <div className="mt-16 grid gap-4 md:grid-cols-2">
           {ADVANTAGES.map((advantage, i) => (
             <Reveal key={advantage.id} delay={(i % 2) * 0.1}>
               <article className="group flex h-full flex-col border border-paper/12 bg-shale">
-                <div className="relative flex h-[320px] items-center justify-center overflow-hidden border-b border-paper/10 px-6 pt-10 md:h-[360px]">
-                  <span className="absolute left-5 top-5 font-cond text-xs uppercase tracking-[0.14em] text-blaze">{advantage.label}</span>
-                  <div className="transition-transform duration-700 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.02]">
+                <div className="relative flex h-[290px] items-center justify-center overflow-hidden border-b border-paper/10 px-4 pt-10 sm:h-[320px] sm:px-6 md:h-[360px]">
+                  <span className="absolute left-5 top-5 font-cond text-[0.8rem] uppercase tracking-[0.14em] text-blaze">{advantage.label}</span>
+                  {/* На узких телефонах мини-интерфейс чуть уменьшен, чтобы не обрезались пометки. */}
+                  <div className="scale-[0.84] transition-transform duration-700 ease-out min-[400px]:scale-[0.92] sm:scale-100 sm:group-hover:-translate-y-1.5 sm:group-hover:scale-[1.02]">
                     {MOCKUPS[advantage.id]}
                   </div>
                 </div>
                 <div className="flex flex-col gap-3 p-6 md:p-8">
                   <h3 className="text-xl font-medium leading-tight">{advantage.title}</h3>
-                  <p className="max-w-md text-sm leading-[1.6] text-paper/65">{advantage.text}</p>
+                  <p className="max-w-md text-[0.95rem] leading-[1.6] md:text-base text-paper/65">{advantage.text}</p>
                 </div>
               </article>
             </Reveal>
@@ -78,7 +79,7 @@ const INTERESTS: { label: string; isOn: boolean }[] = [
 function ApproachMock() {
   return (
     <div className="relative w-[290px] bg-paper p-5 text-ink">
-      <div className="flex items-center justify-between font-cond text-xs uppercase tracking-[0.12em] text-ink/50">
+      <div className="flex items-center justify-between font-cond text-[0.8rem] uppercase tracking-[0.12em] text-ink/50">
         <span>Маршрут участника</span>
         <span>смена 02</span>
       </div>
@@ -142,7 +143,7 @@ function DailyMock() {
   return (
     <div className="relative">
       <div className="w-[270px] bg-paper p-5 text-ink">
-        <p className="font-cond text-xs uppercase tracking-[0.12em] text-ink/50">Распорядок дня</p>
+        <p className="font-cond text-[0.8rem] uppercase tracking-[0.12em] text-ink/50">Распорядок дня</p>
         <ul className="mt-3 flex flex-col">
           {DAY.map((item) => (
             <li key={item.time} className="flex items-center gap-3 border-b border-ink/10 py-2 text-sm last:border-0">

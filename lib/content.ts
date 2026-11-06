@@ -19,7 +19,7 @@ export const PHOTOS = {
   beachPlay: photo("beach-play"),
   territory: photo("territory"),
   eveningSquare: photo("evening-square"),
-  park: photo("park"),
+  friendship: photo("friendship"),
   football: photo("football"),
   olympicGames: photo("olympic-games"),
   stadium: photo("stadium"),
@@ -41,7 +41,6 @@ export const SITE = {
   short: "ДК «Олимпиец»",
   fullName: "Детский оздоровительный комплекс «Олимпиец»",
   city: "Анапа",
-  season: "Сезон 2027",
   phone: "+7 (900) 000-00-00",
   phoneHref: "tel:+79000000000",
   email: "info@dk-olimpiec.ru",
@@ -75,7 +74,7 @@ export const SHIFTS: Shift[] = [
   { title: "Чемпионы лета", dates: "09.08 — 29.08", tag: "лето", photo: PHOTOS.olympicGames },
   { title: "Золотая осень", dates: "26.10 — 04.11", tag: "осень", photo: PHOTOS.territory },
   { title: "Новогодняя сказка", dates: "28.12 — 08.01", tag: "зима", photo: PHOTOS.eveningSquare },
-  { title: "Весенний разгон", dates: "23.03 — 01.04", tag: "весна", photo: PHOTOS.park },
+  { title: "Весенний разгон", dates: "23.03 — 01.04", tag: "весна", photo: PHOTOS.friendship },
 ];
 
 export const SHIFT_TITLES: readonly string[] = SHIFTS.map((shift) => shift.title);
@@ -124,8 +123,8 @@ export const SEASONS: Season[] = [
     title: "Весенние каникулы",
     months: "конец марта",
     text: "Свежий воздух, просыпающаяся природа и яркая программа — лучший момент, чтобы перезагрузиться и набраться здоровья.",
-    photo: PHOTOS.park,
-    alt: "Ребята в зелёном парке на территории комплекса",
+    photo: PHOTOS.friendship,
+    alt: "Девочка с плакатом «Дружба важнее всего» среди деревьев",
   },
 ];
 

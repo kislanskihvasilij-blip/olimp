@@ -36,7 +36,7 @@ export function Hero() {
           illumination={0.12}
           surfaceDistortion={0.045}
           waterDistortion={0.018}
-          maxDpr={1.5}
+          maxDpr={1.25}
         />
         <div className="absolute inset-0 bg-ink/50" />
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-ink via-ink/70 to-transparent" />
@@ -56,7 +56,7 @@ export function Hero() {
         <h1 className="sr-only">{SITE.fullName}</h1>
         <div
           aria-hidden="true"
-          className="relative mx-auto select-none font-serif text-[clamp(4.2rem,19vw,21rem)] font-light italic leading-[0.82] tracking-[-0.02em]"
+          className="relative mx-auto select-none font-serif text-[clamp(4.6rem,21vw,21rem)] font-light italic leading-[0.82] tracking-[-0.02em]"
         >
           <span className="flex overflow-hidden pr-[0.08em] pb-[0.14em]">
             {WORDMARK.map((letter, i) => (
@@ -71,17 +71,11 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-          <motion.span
-            {...fadeUp(1)}
-            className="absolute -right-[0.15em] top-[0.14em] font-cond text-[0.085em] font-normal not-italic tracking-[0.12em] text-blaze"
-          >
-            ДК
-          </motion.span>
         </div>
 
         <div className="mx-auto mt-8 grid w-full max-w-[1600px] items-end gap-8 md:mt-12 md:grid-cols-[1fr_auto_1fr]">
           <motion.div {...fadeUp(0.9)}>
-            <p className="max-w-[440px] text-[0.95rem] leading-[1.55] text-paper/85">
+            <p className="max-w-[480px] text-base leading-[1.55] md:text-lg text-paper/85">
               Твои лучшие каникулы начинаются здесь: больше пяти гектаров зелени, 300 метров до моря и собственный пляж,
               спорт и праздник каждый день.
             </p>
@@ -129,7 +123,7 @@ function ShiftReel() {
               <span className="text-sm uppercase tracking-[0.02em] transition-colors group-hover/item:text-blaze">
                 «{shift.title}»
               </span>
-              <span className="font-cond text-xs leading-[0.88] text-paper/55">
+              <span className="font-cond text-[0.8rem] leading-[0.88] text-paper/55">
                 {shift.dates} · {shift.tag}
               </span>
             </span>
@@ -144,7 +138,7 @@ function ShiftReel() {
       <div className="flex items-stretch">
         <div className="hidden shrink-0 flex-col justify-center border-r border-paper/20 px-6 font-cond text-[0.75rem] uppercase leading-[0.88] tracking-[0.12em] text-paper/60 md:flex">
           <span className="text-blaze">Смены</span>
-          <span className="mt-1.5">{SITE.season.toLowerCase()}</span>
+          <span className="mt-1.5">круглый год</span>
         </div>
         <div className="marquee-pause relative flex-1 overflow-hidden pl-6">
           <div className="marquee-track flex w-max" style={style}>

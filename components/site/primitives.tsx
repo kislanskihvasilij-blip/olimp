@@ -11,7 +11,7 @@ export function Container({ children, className }: WithChildren) {
 /** Рукописная пометка в квадратных скобках (Freshman → Caveat). */
 export function HandNote({ children, className }: WithChildren) {
   return (
-    <span className={cn("inline-block -rotate-2 font-hand text-[1.5rem] leading-none text-blaze", className)}>
+    <span className={cn("inline-block -rotate-2 font-hand text-[1.65rem] leading-none text-blaze", className)}>
       [ {children} ]
     </span>
   );
@@ -22,7 +22,7 @@ type KickerProps = WithChildren & { index?: string };
 /** Маленькая подпись раздела: «§ 02 —— Каникулы». */
 export function Kicker({ index, children, className }: KickerProps) {
   return (
-    <p className={cn("flex items-center gap-3 font-cond text-[0.8rem] uppercase leading-[0.88] tracking-[0.12em] text-paper/60", className)}>
+    <p className={cn("flex items-center gap-3 font-cond text-[0.85rem] uppercase leading-[0.88] tracking-[0.12em] text-paper/60 md:text-[0.9rem]", className)}>
       {index ? <span className="text-blaze">§ {index}</span> : null}
       <span aria-hidden="true" className="h-px w-10 bg-current opacity-50" />
       <span>{children}</span>
@@ -53,7 +53,7 @@ export function SectionHeading({ index, kicker, lines, note, className }: Sectio
 
 const CTA_VARIANTS = {
   solid: "bg-paper text-ink hover:bg-blaze",
-  ghost: "border border-paper/40 text-paper hover:border-paper hover:bg-paper hover:text-ink",
+  ghost: "border border-paper/40 text-paper hover:border-blaze hover:bg-blaze hover:text-ink",
   dark: "bg-ink text-paper hover:bg-shale",
 } as const;
 
