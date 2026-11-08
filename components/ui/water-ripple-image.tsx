@@ -32,6 +32,10 @@ export type WaterRippleImageProps = Partial<RippleParams> & {
   zoom?: number;
   /** Ограничение devicePixelRatio ради производительности. */
   maxDpr?: number;
+  /** Доля разрешения буфера (<1 — меньше пикселей; рябь мягкая, разницы не видно). */
+  resolution?: number;
+  /** Ограничение частоты кадров (на сенсорных устройствах — не больше 30). */
+  maxFps?: number;
   className?: string;
 };
 
@@ -253,6 +257,8 @@ export default function WaterRippleImage({
   fit = 'contain',
   zoom,
   maxDpr = 2,
+  resolution = 1,
+  maxFps = 60,
   className = '',
 }: WaterRippleImageProps) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -282,7 +288,10 @@ export default function WaterRippleImage({
     const { gl, uniforms } = ctx;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+    const pixelScale = Math.min(window.devicePixelRatio || 1, maxDpr) * resolution;
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    const frameInterval = 1000 / (isCoarsePointer ? Math.min(maxFps, 30) : maxFps);
+    let lastFrameTime = 0;
     let texture: WebGLTexture | null = null;
     let ready = false;
     let visible = true;
@@ -298,12 +307,15 @@ export default function WaterRippleImage({
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
-    const loop = () => {
+    const loop = (now: number) => {
       if (disposed || !visible) {
         frame = 0;
         return;
       }
-      draw(performance.now());
+      if (now - lastFrameTime >= frameInterval) {
+        lastFrameTime = now;
+        draw(now);
+      }
       frame = requestAnimationFrame(loop);
     };
 
@@ -315,8 +327,8 @@ export default function WaterRippleImage({
 
     const resize = () => {
       const { width, height } = wrapper.getBoundingClientRect();
-      const w = Math.max(1, Math.floor(width * dpr));
-      const h = Math.max(1, Math.floor(height * dpr));
+      const w = Math.max(1, Math.floor(width * pixelScale));
+      const h = Math.max(1, Math.floor(height * pixelScale));
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
@@ -365,7 +377,7 @@ export default function WaterRippleImage({
       ctxRef.current = null;
       delete canvas.dataset.ready;
     };
-  }, [src, fit, zoom, maxDpr]);
+  }, [src, fit, zoom, maxDpr, resolution, maxFps]);
 
   return (
     <div

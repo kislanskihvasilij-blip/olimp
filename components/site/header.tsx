@@ -23,12 +23,13 @@ export function SiteHeader() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500",
-          isScrolled ? "border-paper/10 bg-ink/80 backdrop-blur-md" : "border-transparent bg-transparent",
+          isScrolled ? "border-paper/10 bg-ink/90" : "border-transparent bg-transparent",
         )}
       >
         <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <a href="#top" aria-label={`${SITE.short} — наверх`}>
-            <Logo isAnimated />
+          {/* Маскот в шапке бежит только при наведении (.logo-link в globals.css). */}
+          <a href="#top" aria-label={`${SITE.short} — наверх`} className="logo-link">
+            <Logo />
           </a>
           <span className="hidden font-cond text-[0.8rem] uppercase leading-[0.88] tracking-[0.16em] text-paper/60 lg:block">
             {SITE.city} · Черноморское побережье

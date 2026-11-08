@@ -4,9 +4,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    // Unsplash ресайзит сам (см. lib/image-loader.ts); локальные фото из public/photos отдаются как есть.
-    loader: "custom",
-    loaderFile: "./lib/image-loader.ts",
+    // Встроенный оптимизатор: фото из public/photos отдаются в нужном размере и в AVIF/WebP.
+    formats: ["image/avif", "image/webp"],
   },
   turbopack: {
     rules: {

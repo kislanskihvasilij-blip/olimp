@@ -121,35 +121,35 @@
 .mascot * {
   transform-box: view-box;
 }
-.mascot-run .m-body {
+:is(.mascot-run, .logo-link:hover .mascot) .m-body {
   animation: m-bob 0.42s ease-in-out infinite alternate;
 }
-.mascot-run .m-leg-front {
+:is(.mascot-run, .logo-link:hover .mascot) .m-leg-front {
   transform-origin: 102px 150px;
   animation: m-swing 0.42s ease-in-out infinite alternate;
 }
-.mascot-run .m-leg-back {
+:is(.mascot-run, .logo-link:hover .mascot) .m-leg-back {
   transform-origin: 90px 148px;
   animation: m-swing 0.42s ease-in-out infinite alternate-reverse;
 }
-.mascot-run .m-arm-back {
+:is(.mascot-run, .logo-link:hover .mascot) .m-arm-back {
   transform-origin: 98px 110px;
   animation: m-swing-arm 0.42s ease-in-out infinite alternate;
 }
-.mascot-run .m-arm-front {
+:is(.mascot-run, .logo-link:hover .mascot) .m-arm-front {
   transform-origin: 112px 108px;
   animation: m-raise 0.84s ease-in-out infinite alternate;
 }
-.mascot-run .m-hair {
+:is(.mascot-run, .logo-link:hover .mascot) .m-hair {
   transform-origin: 100px 62px;
   animation: m-hair 0.21s ease-in-out infinite alternate;
 }
-.mascot-run .m-flame {
+:is(.mascot-run, .logo-link:hover .mascot) .m-flame {
   transform-box: fill-box;
   transform-origin: 50% 100%;
   animation: m-flicker 0.32s ease-in-out infinite alternate;
 }
-.mascot-run .m-speed path {
+:is(.mascot-run, .logo-link:hover .mascot) .m-speed path {
   stroke-dasharray: 18 30;
   animation: m-dash 0.5s linear infinite;
 }
@@ -221,47 +221,26 @@
 .grain::after {
   content: "";
   position: fixed;
-  inset: -100%;
+  inset: 0;
   z-index: 100;
   pointer-events: none;
   opacity: 0.06;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grain 0.9s steps(5) infinite;
-}
-@keyframes grain {
-  0% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-3%, 2%);
-  }
-  40% {
-    transform: translate(2%, -3%);
-  }
-  60% {
-    transform: translate(-2%, -1%);
-  }
-  80% {
-    transform: translate(3%, 3%);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
   .mascot-run *,
+  .logo-link:hover .mascot *,
   .tile-float,
   .grain::after {
     animation: none !important;
   }
 }
 
-/* Телефоны: зерно статичное и тоньше — без постоянной перерисовки слоя на весь экран. */
+/* Телефоны: зерно тоньше. */
 @media (max-width: 767px) {
   .grain::after {
-    animation: none;
     opacity: 0.04;
   }
 }

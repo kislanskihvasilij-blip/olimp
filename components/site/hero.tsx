@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef, type CSSProperties } from "react";
-import { Mascot } from "@/components/brand/mascot";
+import { preload } from "react-dom";
+import { AnimatedMascot } from "@/components/brand/animated-mascot";
 import { EASE_OUT_EXPO, Scribble } from "@/components/motion/reveal";
 import { CtaLink, HandNote } from "@/components/site/primitives";
 import WaterRippleImage from "@/components/ui/water-ripple-image";
@@ -13,6 +14,8 @@ const WORDMARK = Array.from("Олимпиец");
 const LETTER_DELAY = 0.06;
 
 export function Hero() {
+  // Фон hero — самая крупная картинка первого экрана: грузим её с высоким приоритетом.
+  preload(HERO_PHOTO, { as: "image", fetchPriority: "high" });
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -37,6 +40,8 @@ export function Hero() {
           surfaceDistortion={0.045}
           waterDistortion={0.018}
           maxDpr={1.25}
+          resolution={0.6}
+          maxFps={45}
         />
         <div className="absolute inset-0 bg-ink/50" />
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-ink via-ink/70 to-transparent" />
@@ -92,7 +97,7 @@ export function Hero() {
               <span className="font-hand text-[1.6rem] leading-none text-paper">Привет! Я — Олимпик</span>
               <Scribble variant="arrow" className="absolute -bottom-12 right-2 h-11 w-20 text-blaze" delay={1.6} />
             </div>
-            <Mascot isAnimated className="size-28 lg:size-36" label="Маскот Олимпик бежит с факелом" />
+            <AnimatedMascot className="size-28 lg:size-36" label="Маскот Олимпик бежит с факелом" />
           </motion.div>
         </div>
       </motion.div>
@@ -134,7 +139,7 @@ function ShiftReel() {
   );
 
   return (
-    <div className="relative z-10 border-t border-paper/20 bg-ink/60 backdrop-blur-sm">
+    <div className="relative z-10 border-t border-paper/20 bg-ink/85">
       <div className="flex items-stretch">
         <div className="hidden shrink-0 flex-col justify-center border-r border-paper/20 px-6 font-cond text-[0.75rem] uppercase leading-[0.88] tracking-[0.12em] text-paper/60 md:flex">
           <span className="text-blaze">Смены</span>

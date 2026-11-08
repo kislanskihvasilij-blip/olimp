@@ -9,11 +9,12 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin", "cyrillic"],
   weight: ["300"],
-  style: ["normal", "italic"],
+  style: ["italic"],
   display: "swap",
 });
-const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin", "cyrillic"], weight: ["400"], display: "swap" });
-const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin", "cyrillic"], weight: ["500"], display: "swap" });
+// Подписи и рукописные пометки не критичны для первого кадра — без preload, чтобы не мешать фото hero.
+const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin", "cyrillic"], weight: ["400"], display: "swap", preload: false });
+const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin", "cyrillic"], weight: ["500"], display: "swap", preload: false });
 const unbounded = Unbounded({ variable: "--font-unbounded", subsets: ["latin", "cyrillic"], weight: ["900"], display: "swap" });
 
 const TITLE = "«Олимпиец» — детский оздоровительный комплекс в Анапе";

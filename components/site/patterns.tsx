@@ -3,10 +3,14 @@
 /**
  * Плавающие узоры между секциями (по мотивам vitakurort.ru).
  *
- * Кучка плиток с геометрическими мотивами висит на стыке секций у края экрана.
- * Когда стык въезжает в экран, плитки прилетают с разных сторон и собираются
- * в мозаику к центру экрана, а дальше разлетаются вверх. Сверху — лёгкое
- * «покачивание» (CSS .tile-float). Слой лежит позади контента (z-index < 0).
+ * Три вида полос на стыках секций (слой позади контента, z-index < 0):
+ *  - cluster — кучка мелких плиток у края: каждая едет по своей оси (X или Y)
+ *    и собирается в мозаику, когда стык проходит центр экрана;
+ *  - ribbon  — горизонтальная лента плиток, едет вбок вместе с прокруткой;
+ *  - column  — вертикальная колонка плиток у края (только на широких экранах).
+ *
+ * Оптимизация: двигается только transform, у лент и колонок — один motion value
+ * на всю полосу; prefers-reduced-motion → узоры стоят на месте.
  */
 
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
@@ -23,21 +27,29 @@ const COLORS = {
 
 type Color = keyof typeof COLORS;
 type TileKind = "quarter" | "arcs" | "waves" | "chevrons" | "steps" | "circle" | "half" | "plus" | "flame" | "checker" | "ring" | "stripes";
+type Motif = { kind: TileKind; fg: Color; bg?: Color };
+type Side = "left" | "right";
 
-type Tile = {
-  kind: TileKind;
-  fg: Color;
-  bg?: Color;
+type ClusterTile = Motif & {
   col: number;
   row: number;
-  /** Откуда плитка прилетает (px) и на сколько градусов повёрнута в начале. */
-  from: [number, number];
-  rotate: number;
-  /** Скрывать на телефонах, чтобы кучка была компактнее. */
+  /** Ось движения и размах (px): плитка проезжает от +travel до −travel. */
+  axis: "x" | "y";
+  travel: number;
+  spin?: number;
   isDesktopOnly?: boolean;
 };
 
-type Cluster = { side: "left" | "right"; offset: string; tiles: Tile[] };
+type Band =
+  | { type: "cluster"; side: Side; offset: string; tiles: ClusterTile[] }
+  | { type: "ribbon"; direction: "left" | "right"; motifs: Motif[] }
+  | { type: "column"; side: Side; offset: string; direction: "up" | "down"; motifs: Motif[] };
+
+/** Размер плитки: мелкие абстракции, на телефоне ещё мельче. */
+const TILE_SIZE = "clamp(22px, 2.5vw, 44px)";
+const STRIP_GAP = 8;
+
+const sideStyle = (side: Side, offset: string): CSSProperties => (side === "left" ? { left: offset } : { right: offset });
 
 function TileArt({ kind, fg, bg }: { kind: TileKind; fg: string; bg?: string }) {
   const art: Record<TileKind, ReactNode> = {
@@ -50,14 +62,14 @@ function TileArt({ kind, fg, bg }: { kind: TileKind; fg: string; bg?: string }) 
       </>
     ),
     waves: (
-      <g fill="none" stroke={fg} strokeWidth="11">
+      <g fill="none" stroke={fg} strokeWidth="12">
         {[22, 50, 78].map((y) => (
           <path key={y} d={`M-5 ${y} Q7.5 ${y - 13} 20 ${y} T45 ${y} T70 ${y} T95 ${y} T120 ${y}`} />
         ))}
       </g>
     ),
     chevrons: (
-      <g fill="none" stroke={fg} strokeWidth="11" strokeLinejoin="miter">
+      <g fill="none" stroke={fg} strokeWidth="12">
         {[22, 50, 78].map((y) => (
           <path key={y} d={`M0 ${y + 10} L50 ${y - 10} L100 ${y + 10}`} />
         ))}
@@ -86,7 +98,7 @@ function TileArt({ kind, fg, bg }: { kind: TileKind; fg: string; bg?: string }) 
     ),
     ring: <circle cx="50" cy="50" r="33" fill="none" stroke={fg} strokeWidth="15" />,
     stripes: (
-      <g stroke={fg} strokeWidth="10">
+      <g stroke={fg} strokeWidth="11">
         {[-40, -10, 20, 50, 80, 110].map((shift) => (
           <path key={shift} d={`M${shift} 100 L${shift + 100} 0`} />
         ))}
@@ -102,159 +114,192 @@ function TileArt({ kind, fg, bg }: { kind: TileKind; fg: string; bg?: string }) 
   );
 }
 
-const T = (kind: TileKind, fg: Color, col: number, row: number, from: [number, number], rotate: number, extra: Partial<Tile> = {}): Tile => ({
-  kind,
-  fg,
-  col,
-  row,
-  from,
-  rotate,
-  ...extra,
-});
+const M = (kind: TileKind, fg: Color, bg?: Color): Motif => ({ kind, fg, bg });
 
-/** Кучки плиток для стыков секций (по порядку сверху вниз). */
-const CLUSTERS: Record<string, Cluster> = {
+const tile = (
+  motif: Motif,
+  col: number,
+  row: number,
+  axis: "x" | "y",
+  travel: number,
+  extra: Partial<ClusterTile> = {},
+): ClusterTile => ({ ...motif, col, row, axis, travel, ...extra });
+
+/** Палитра мотивов для лент и колонок. */
+const STRIP_MOTIFS: Motif[] = [
+  M("waves", "sea"),
+  M("quarter", "blaze"),
+  M("chevrons", "paper", "shale"),
+  M("circle", "flame"),
+  M("steps", "blaze"),
+  M("plus", "paper"),
+  M("arcs", "blaze", "flame"),
+  M("ring", "sea"),
+  M("flame", "flame", "shale"),
+  M("checker", "blaze"),
+  M("half", "flame"),
+  M("stripes", "sea", "shale"),
+];
+
+const rotateMotifs = (shift: number): Motif[] => [...STRIP_MOTIFS.slice(shift), ...STRIP_MOTIFS.slice(0, shift)];
+
+const BANDS = {
   heroSeasons: {
+    type: "cluster",
     side: "right",
-    offset: "2%",
+    offset: "2.5%",
     tiles: [
-      T("arcs", "blaze", 1, 0, [140, -90], 45, { bg: "flame" }),
-      T("waves", "sea", 0, 1, [-110, 150], -30),
-      T("steps", "blaze", 1, 1, [180, 120], 25),
-      T("circle", "flame", 2, 2, [90, 240], 0, { isDesktopOnly: true }),
+      tile(M("arcs", "blaze", "flame"), 1, 0, "x", 180, { spin: 30 }),
+      tile(M("waves", "sea"), 0, 1, "y", 120),
+      tile(M("steps", "blaze"), 1, 1, "x", -150),
+      tile(M("circle", "flame"), 2, 2, "y", -140, { isDesktopOnly: true }),
     ],
   },
-  seasonsAbout: {
-    side: "left",
-    offset: "1.5%",
-    tiles: [
-      T("quarter", "flame", 0, 0, [-160, -60], -40),
-      T("chevrons", "paper", 1, 1, [120, 180], 30, { bg: "shale" }),
-      T("plus", "blaze", 0, 2, [-90, 220], 90, { isDesktopOnly: true }),
-    ],
-  },
+  seasonsAbout: { type: "ribbon", direction: "left", motifs: rotateMotifs(0) },
   aboutAdvantages: {
+    type: "cluster",
     side: "right",
-    offset: "1.5%",
-    tiles: [
-      T("half", "sea", 0, 0, [-120, -110], -35),
-      T("stripes", "blaze", 1, 0, [160, -40], 20, { bg: "shale" }),
-      T("ring", "flame", 1, 1, [110, 200], -60),
-    ],
-  },
-  advantagesPrograms: {
-    side: "left",
     offset: "2%",
     tiles: [
-      T("steps", "flame", 0, 0, [-180, -80], -25),
-      T("flame", "flame", 1, 0, [90, -160], 15, { bg: "shale" }),
-      T("checker", "blaze", 1, 1, [150, 140], 45, { isDesktopOnly: true }),
-      T("waves", "sea", 0, 1, [-130, 170], -20),
+      tile(M("half", "sea"), 0, 0, "y", 130),
+      tile(M("stripes", "blaze", "shale"), 1, 0, "x", 170),
+      tile(M("ring", "flame"), 1, 1, "y", -120, { spin: 45 }),
     ],
   },
+  advantagesPrograms: { type: "column", side: "left", offset: "0.75%", direction: "down", motifs: rotateMotifs(3).slice(0, 7) },
   programsSport: {
+    type: "cluster",
     side: "right",
-    offset: "1.5%",
+    offset: "2%",
     tiles: [
-      T("ring", "paper", 0, 0, [-100, -150], 50),
-      T("arcs", "sea", 1, 1, [170, 60], -45, { bg: "paper" }),
-      T("quarter", "blaze", 0, 1, [-150, 160], 30),
+      tile(M("ring", "paper"), 0, 0, "x", -160),
+      tile(M("arcs", "sea", "paper"), 1, 1, "y", 140, { spin: -30 }),
+      tile(M("quarter", "blaze"), 0, 1, "x", 190),
     ],
   },
-  sportKnowledge: {
-    side: "left",
-    offset: "1.5%",
-    tiles: [
-      T("chevrons", "flame", 0, 0, [-140, -100], 35),
-      T("plus", "paper", 1, 1, [130, 170], -90),
-      T("circle", "blaze", 0, 1, [-170, 120], 0, { isDesktopOnly: true }),
-    ],
-  },
+  sportKnowledge: { type: "ribbon", direction: "right", motifs: rotateMotifs(5) },
   knowledgePartners: {
-    side: "right",
-    offset: "2%",
-    tiles: [
-      T("flame", "flame", 1, 0, [150, -130], -20, { bg: "shale" }),
-      T("steps", "blaze", 0, 1, [-140, 90], 30),
-      T("waves", "sea", 1, 1, [120, 190], -25, { isDesktopOnly: true }),
-    ],
-  },
-  partnersReviews: {
+    type: "cluster",
     side: "left",
-    offset: "2%",
+    offset: "2.5%",
     tiles: [
-      T("half", "flame", 0, 0, [-150, -90], 40),
-      T("stripes", "sea", 1, 0, [110, -170], -15),
-      T("quarter", "paper", 1, 1, [170, 130], 60, { isDesktopOnly: true }),
+      tile(M("flame", "flame", "shale"), 1, 0, "y", -130),
+      tile(M("steps", "blaze"), 0, 1, "x", -180),
+      tile(M("waves", "sea"), 1, 1, "x", 150, { isDesktopOnly: true }),
     ],
   },
+  partnersReviews: { type: "column", side: "right", offset: "0.75%", direction: "up", motifs: rotateMotifs(8).slice(0, 7) },
   reviewsFaq: {
-    side: "right",
-    offset: "1.5%",
-    tiles: [
-      T("checker", "flame", 0, 0, [-120, -140], -45),
-      T("arcs", "blaze", 1, 1, [160, 150], 35, { bg: "flame" }),
-    ],
-  },
-  faqBooking: {
+    type: "cluster",
     side: "left",
     offset: "2%",
     tiles: [
-      T("circle", "sea", 0, 0, [-150, -120], 0),
-      T("steps", "paper", 1, 0, [120, -180], 20, { isDesktopOnly: true }),
-      T("chevrons", "blaze", 1, 1, [170, 120], -30, { bg: "shale" }),
+      tile(M("checker", "flame"), 0, 0, "x", 170, { spin: 45 }),
+      tile(M("arcs", "blaze", "flame"), 1, 1, "y", -140),
+      tile(M("plus", "paper"), 2, 0, "y", 110, { isDesktopOnly: true }),
     ],
   },
-};
+  faqBooking: { type: "ribbon", direction: "left", motifs: rotateMotifs(9) },
+} satisfies Record<string, Band>;
 
-export type PatternBandVariant = keyof typeof CLUSTERS;
+export type PatternBandVariant = keyof typeof BANDS;
 
-/** Нулевая по высоте полоса на стыке секций; плитки свисают в отступы соседних секций. */
+/** Нулевая по высоте полоса на стыке секций; узоры свисают в отступы соседних секций. */
 export function PatternBand({ variant }: { variant: PatternBandVariant }) {
   const ref = useRef<HTMLDivElement>(null);
   const isReduced = useReducedMotion() ?? false;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const cluster = CLUSTERS[variant];
-  const rows = Math.max(...cluster.tiles.map((tile) => tile.row)) + 1;
-  const cols = Math.max(...cluster.tiles.map((tile) => tile.col)) + 1;
-
-  const style = {
-    "--tile": "clamp(40px, 5.4vw, 92px)",
-    [cluster.side]: cluster.offset,
-    top: `calc(var(--tile) * ${-rows / 2})`,
-    gridTemplateColumns: `repeat(${cols}, var(--tile))`,
-    gridAutoRows: "var(--tile)",
-  } as CSSProperties;
+  const band: Band = BANDS[variant];
 
   return (
-    <div ref={ref} aria-hidden="true" className="pointer-events-none relative -z-10 h-0">
-      <div className="absolute grid" style={style}>
-        {cluster.tiles.map((tile) => (
-          <FloatingTile key={`${tile.kind}-${tile.col}-${tile.row}`} tile={tile} progress={scrollYProgress} isReduced={isReduced} />
-        ))}
-      </div>
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className={cn("pointer-events-none relative -z-10 h-0", band.type === "column" && "max-lg:hidden")}
+      style={{ "--tile": TILE_SIZE } as CSSProperties}
+    >
+      {band.type === "cluster" ? <Cluster band={band} progress={scrollYProgress} isReduced={isReduced} /> : null}
+      {band.type === "ribbon" ? <Ribbon band={band} progress={scrollYProgress} isReduced={isReduced} /> : null}
+      {band.type === "column" ? <Column band={band} progress={scrollYProgress} isReduced={isReduced} /> : null}
     </div>
   );
 }
 
-type FloatingTileProps = { tile: Tile; progress: MotionValue<number>; isReduced: boolean };
+type PartProps<T extends Band["type"]> = {
+  band: Extract<Band, { type: T }>;
+  progress: MotionValue<number>;
+  isReduced: boolean;
+};
 
-function FloatingTile({ tile, progress, isReduced }: FloatingTileProps) {
-  const [fromX, fromY] = tile.from;
-  // Прилетают → собираются к центру экрана (0.5) → разлетаются вверх.
-  const x = useTransform(progress, [0, 0.5, 1], [fromX, 0, -fromX * 0.5]);
-  const y = useTransform(progress, [0, 0.5, 1], [fromY, 0, -Math.abs(fromY) * 0.9]);
-  const rotate = useTransform(progress, [0, 0.5, 1], [tile.rotate, 0, -tile.rotate]);
-  const opacity = useTransform(progress, [0, 0.25, 0.85, 1], [0, 1, 1, 0.2]);
+function Cluster({ band, progress, isReduced }: PartProps<"cluster">) {
+  const rows = Math.max(...band.tiles.map((item) => item.row)) + 1;
+  const cols = Math.max(...band.tiles.map((item) => item.col)) + 1;
+  const style: CSSProperties = {
+    ...sideStyle(band.side, band.offset),
+    top: `calc(var(--tile) * ${-rows / 2})`,
+    gridTemplateColumns: `repeat(${cols}, var(--tile))`,
+    gridAutoRows: "var(--tile)",
+  };
+
+  return (
+    <div className="absolute grid" style={style}>
+      {band.tiles.map((item) => (
+        <ClusterTileView key={`${item.kind}-${item.col}-${item.row}`} item={item} progress={progress} isReduced={isReduced} />
+      ))}
+    </div>
+  );
+}
+
+function ClusterTileView({ item, progress, isReduced }: { item: ClusterTile; progress: MotionValue<number>; isReduced: boolean }) {
+  // Едет по одной оси: от +travel (стык внизу экрана) через 0 (центр) к −travel (стык вверху).
+  const shift = useTransform(progress, [0, 1], [item.travel, -item.travel]);
+  const rotate = useTransform(progress, [0, 1], [item.spin ?? 0, -(item.spin ?? 0)]);
+  const motionStyle = isReduced ? {} : item.axis === "x" ? { x: shift, rotate } : { y: shift, rotate };
 
   return (
     <motion.div
-      className={cn(tile.isDesktopOnly && "max-md:hidden")}
-      style={{ gridColumn: tile.col + 1, gridRow: tile.row + 1, ...(isReduced ? {} : { x, y, rotate, opacity }) }}
+      className={cn(item.isDesktopOnly && "max-md:hidden")}
+      style={{ gridColumn: item.col + 1, gridRow: item.row + 1, ...motionStyle }}
     >
-      <div className="tile-float size-full" style={{ animationDelay: `${(tile.col * 2 + tile.row) * -1.1}s` }}>
-        <TileArt kind={tile.kind} fg={COLORS[tile.fg]} bg={tile.bg ? COLORS[tile.bg] : undefined} />
+      <div className="tile-float size-full" style={{ animationDelay: `${(item.col * 2 + item.row) * -1.1}s` }}>
+        <TileArt kind={item.kind} fg={COLORS[item.fg]} bg={item.bg ? COLORS[item.bg] : undefined} />
       </div>
+    </motion.div>
+  );
+}
+
+function StripTiles({ motifs }: { motifs: Motif[] }) {
+  return motifs.map((motif, i) => (
+    <div key={`${motif.kind}-${i}`} className="size-(--tile) shrink-0">
+      <TileArt kind={motif.kind} fg={COLORS[motif.fg]} bg={motif.bg ? COLORS[motif.bg] : undefined} />
+    </div>
+  ));
+}
+
+function Ribbon({ band, progress, isReduced }: PartProps<"ribbon">) {
+  // Мотивы повторены трижды, чтобы лента перекрывала экран на любом размахе.
+  const motifs = [...band.motifs, ...band.motifs, ...band.motifs];
+  const x = useTransform(progress, [0, 1], band.direction === "left" ? ["-6%", "-30%"] : ["-30%", "-6%"]);
+
+  return (
+    <motion.div
+      className="absolute left-0 flex w-max"
+      style={{ top: "calc(var(--tile) / -2)", gap: STRIP_GAP, x: isReduced ? "-18%" : x }}
+    >
+      <StripTiles motifs={motifs} />
+    </motion.div>
+  );
+}
+
+function Column({ band, progress, isReduced }: PartProps<"column">) {
+  const y = useTransform(progress, [0, 1], band.direction === "down" ? [-140, 220] : [220, -140]);
+
+  return (
+    <motion.div
+      className="absolute flex flex-col"
+      style={{ ...sideStyle(band.side, band.offset), top: 0, gap: STRIP_GAP, y: isReduced ? 0 : y }}
+    >
+      <StripTiles motifs={band.motifs} />
     </motion.div>
   );
 }

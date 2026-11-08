@@ -13,7 +13,7 @@ export function Reviews() {
             <li key={review.name} className={cn(i % 2 === 1 && "md:translate-y-12")}>
               <Reveal delay={(i % 2) * 0.1} className="h-full">
                 <figure className="flex h-full flex-col gap-8 border border-paper/12 bg-shale p-6 md:p-10">
-                  <span aria-hidden="true" className="font-serif text-7xl leading-[0.5] text-blaze">
+                  <span aria-hidden="true" className="font-serif text-7xl italic leading-[0.5] text-blaze">
                     «
                   </span>
                   <blockquote className="font-serif text-[1.55rem] font-light italic leading-[1.25] md:text-[1.8rem]">

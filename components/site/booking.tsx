@@ -5,7 +5,7 @@
  */
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { Mascot } from "@/components/brand/mascot";
+import { AnimatedMascot } from "@/components/brand/animated-mascot";
 import { Scribble } from "@/components/motion/reveal";
 import { CHILD_AGES, SHIFTS, SITE } from "@/lib/content";
 import { EMPTY_LEAD, formatPhone, validateLead, type LeadErrors, type LeadInput } from "@/lib/lead";
@@ -34,7 +34,7 @@ export function Booking() {
             Оставьте контакты — менеджер свяжется в течение суток, уточнит детали и поможет выбрать смену.
           </p>
           <div className="relative mt-auto hidden pt-16 lg:block">
-            <Mascot isAnimated className="size-56" label="Маскот Олимпик бежит с факелом" />
+            <AnimatedMascot className="size-56" label="Маскот Олимпик бежит с факелом" />
             <span className="absolute left-64 top-28 -rotate-3 font-hand text-[2rem] leading-none">
               мы уже бежим
               <br />к вам навстречу!
