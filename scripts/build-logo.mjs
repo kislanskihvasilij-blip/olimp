@@ -10,12 +10,11 @@ import opentype from "opentype.js";
 import { BRAND_COLORS, MASCOT_SVG_INNER } from "../lib/brand/mascot.ts";
 
 const FONTS_CSS_URL =
-  "https://fonts.googleapis.com/css2?family=Unbounded:wght@600;900&family=Oswald:wght@500&display=swap";
+  "https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Oswald:wght@500&display=swap";
 const FACE_PATTERN = /font-family:\s*'([^']+)';[\s\S]*?font-weight:\s*(\d+);[\s\S]*?src:\s*url\(([^)]+)\)/g;
 
 const MARK = 200;
 const WORD = "ОЛИМПИЕЦ";
-const PREFIX = "ДК ";
 const SUBLINE = "ДЕТСКИЙ ОЗДОРОВИТЕЛЬНЫЙ КОМПЛЕКС";
 const SUB_TRACKING = 0.12;
 
@@ -32,7 +31,7 @@ async function loadFonts() {
     const buffer = await (await fetchOk(url)).arrayBuffer();
     fonts.set(`${family}-${weight}`, opentype.parse(buffer));
   }
-  for (const key of ["Unbounded-600", "Unbounded-900", "Oswald-500"]) {
+  for (const key of ["Unbounded-900", "Oswald-500"]) {
     if (!fonts.has(key)) throw new Error(`Шрифт ${key} не найден в ответе Google Fonts`);
   }
   return fonts;
@@ -84,21 +83,17 @@ function svg(width, height, body) {
 const mark = (x, y, scale = 1) => `<g transform="translate(${x} ${y}) scale(${scale})">${MASCOT_SVG_INNER}</g>`;
 
 function wordmark(fonts, x, baseline, size, color) {
-  const prefixFont = fonts.get("Unbounded-600");
   const wordFont = fonts.get("Unbounded-900");
-  const prefixWidth = measure(prefixFont, PREFIX, size);
   return {
-    width: prefixWidth + measure(wordFont, WORD, size),
-    body:
-      `<path fill="${color}" d="${textPath(prefixFont, PREFIX, x, baseline, size)}"/>` +
-      `<path fill="${color}" d="${textPath(wordFont, WORD, x + prefixWidth, baseline, size)}"/>`,
+    width: measure(wordFont, WORD, size),
+    body: `<path fill="${color}" d="${textPath(wordFont, WORD, x, baseline, size)}"/>`,
   };
 }
 
 function horizontal(fonts, subColor) {
   const sub = fonts.get("Oswald-500");
   const textX = MARK + 36;
-  const word = wordmark(fonts, textX, 112, 72, BRAND_COLORS.blaze);
+  const word = wordmark(fonts, textX, 114, 84, BRAND_COLORS.blaze);
   const subSize = Math.min(28, (word.width / measure(sub, SUBLINE, 1, SUB_TRACKING)) * 0.98);
   const subBody = `<path fill="${subColor}" d="${textPath(sub, SUBLINE, textX + 2, 156, subSize, SUB_TRACKING)}"/>`;
   return svg(textX + word.width + 8, MARK, mark(0, 0) + word.body + subBody);
@@ -106,7 +101,7 @@ function horizontal(fonts, subColor) {
 
 function stacked(fonts, subColor) {
   const sub = fonts.get("Oswald-500");
-  const size = 64;
+  const size = 72;
   const probe = wordmark(fonts, 0, 0, size, BRAND_COLORS.blaze);
   const width = Math.max(probe.width, MARK * 1.2) + 40;
   const word = wordmark(fonts, (width - probe.width) / 2, 300, size, BRAND_COLORS.blaze);

@@ -14,9 +14,9 @@ const cormorant = Cormorant_Garamond({
 });
 const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin", "cyrillic"], weight: ["400"], display: "swap" });
 const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin", "cyrillic"], weight: ["500"], display: "swap" });
-const unbounded = Unbounded({ variable: "--font-unbounded", subsets: ["latin", "cyrillic"], weight: ["600", "900"], display: "swap" });
+const unbounded = Unbounded({ variable: "--font-unbounded", subsets: ["latin", "cyrillic"], weight: ["900"], display: "swap" });
 
-const TITLE = "ДК «Олимпиец» — детский оздоровительный комплекс в Анапе";
+const TITLE = "«Олимпиец» — детский оздоровительный комплекс в Анапе";
 const DESCRIPTION =
   "Детский оздоровительный комплекс «Олимпиец» в Анапе: больше пяти гектаров зелени, 300 метров до моря и собственный пляж, спортгородок и пятиразовое питание. Смены круглый год.";
 

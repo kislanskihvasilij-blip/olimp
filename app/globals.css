@@ -86,8 +86,9 @@
     background: var(--color-ink);
     color-scheme: dark;
   }
+  /* Фон задан на html: у body его нет, иначе он перекрыл бы узоры (z-index < 0). */
   body {
-    @apply bg-ink text-paper antialiased;
+    @apply text-paper antialiased;
   }
   ::selection {
     background: var(--color-blaze);
@@ -203,6 +204,19 @@
   }
 }
 
+/* ---------- Плавающие узоры (components/site/patterns.tsx) ---------- */
+@keyframes tile-float {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(-9px) rotate(3deg);
+  }
+}
+.tile-float {
+  animation: tile-float 4.5s ease-in-out infinite alternate;
+}
+
 /* ---------- Киношное зерно ---------- */
 .grain::after {
   content: "";
@@ -238,6 +252,7 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
   .mascot-run *,
+  .tile-float,
   .grain::after {
     animation: none !important;
   }

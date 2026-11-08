@@ -5,7 +5,7 @@ import { HandNote } from "@/components/site/primitives";
 import { BRAND_COLORS } from "@/lib/brand/mascot";
 
 export const metadata: Metadata = {
-  title: "Логотип — ДК «Олимпиец»",
+  title: "Логотип — ДОК «Олимпиец»",
   description: "Логотип и фирменные цвета детского оздоровительного комплекса «Олимпиец».",
 };
 
@@ -38,7 +38,7 @@ export default function BrandPage() {
           </div>
           <p className="max-w-md text-sm leading-[1.7] text-paper/70">
             Мультяшный ребёнок бежит с олимпийским факелом — без колец, только движение, спорт и радость. Ядерно-оранжевый круг,
-            пламя вырывается за его край. Надпись «ДК Олимпиец» набрана шрифтом Unbounded, подпись — Oswald.
+            пламя вырывается за его край. Надпись «Олимпиец» набрана шрифтом Unbounded, подпись «Детский оздоровительный комплекс» — Oswald.
           </p>
         </header>
 

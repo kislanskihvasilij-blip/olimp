@@ -62,7 +62,7 @@ export function Logo({ className, isAnimated = false, size = "sm", tone = "dark"
       <Mascot isAnimated={isAnimated} className={cn("shrink-0", sizes.mark)} />
       <span className="flex flex-col">
         <span className={cn("whitespace-nowrap font-logo font-black uppercase leading-none tracking-[-0.03em]", sizes.word, tones.word)}>
-          <span className="font-semibold">ДК</span> Олимпиец
+          Олимпиец
         </span>
         <span className={cn("font-cond uppercase leading-none tracking-[0.12em]", sizes.sub, tones.sub)}>
           Детский оздоровительный комплекс

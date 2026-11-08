@@ -9,6 +9,7 @@ import { SiteHeader } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { Knowledge } from "@/components/site/knowledge";
 import { Partners } from "@/components/site/partners";
+import { PatternBand } from "@/components/site/patterns";
 import { Programs } from "@/components/site/programs";
 import { Reviews } from "@/components/site/reviews";
 import { Seasons } from "@/components/site/seasons";
@@ -18,17 +19,28 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <main>
+      {/* overflow-x-clip: плитки у краёв не дают горизонтальной прокрутки и не ломают sticky. */}
+      <main className="overflow-x-clip">
         <Hero />
+        <PatternBand variant="heroSeasons" />
         <Seasons />
+        <PatternBand variant="seasonsAbout" />
         <About />
+        <PatternBand variant="aboutAdvantages" />
         <Advantages />
+        <PatternBand variant="advantagesPrograms" />
         <Programs />
+        <PatternBand variant="programsSport" />
         <Sport />
+        <PatternBand variant="sportKnowledge" />
         <Knowledge />
+        <PatternBand variant="knowledgePartners" />
         <Partners />
+        <PatternBand variant="partnersReviews" />
         <Reviews />
+        <PatternBand variant="reviewsFaq" />
         <Faq />
+        <PatternBand variant="faqBooking" />
         <Booking />
         <Contacts />
       </main>
