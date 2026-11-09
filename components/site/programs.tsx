@@ -37,11 +37,11 @@ export function Programs() {
     >
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
-          <SectionHeading index="05" kicker="Путёвки" lines={["Всё для вас —", "в любое время", "года"]} note="выберите свою смену" />
+          <SectionHeading index="05" kicker="Путёвки" lines={["Всё для вас —", "этим летом"]} note="выберите свою смену" />
           <Reveal className="max-w-md md:justify-self-end">
             <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
-              Программы, в которых каждый найдёт своё: от оздоровительных смен у моря до спортивных сборов и коротких каникул
-              межсезонья.
+              Программы, в которых каждый найдёт своё: от оздоровительных смен у моря до спортивных сборов и выездов
+              организованных групп.
             </p>
           </Reveal>
         </div>

@@ -12,7 +12,7 @@ import { Partners } from "@/components/site/partners";
 import { PatternBand } from "@/components/site/patterns";
 import { Programs } from "@/components/site/programs";
 import { Reviews } from "@/components/site/reviews";
-import { Seasons } from "@/components/site/seasons";
+import { SummerShifts } from "@/components/site/seasons";
 import { Sport } from "@/components/site/sport";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
       <main className="overflow-x-clip">
         <Hero />
         <PatternBand variant="heroSeasons" />
-        <Seasons />
+        <SummerShifts />
         <PatternBand variant="seasonsAbout" />
         <About />
         <PatternBand variant="aboutAdvantages" />

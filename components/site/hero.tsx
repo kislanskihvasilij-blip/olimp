@@ -143,7 +143,7 @@ function ShiftReel() {
       <div className="flex items-stretch">
         <div className="hidden shrink-0 flex-col justify-center border-r border-paper/20 px-6 font-cond text-[0.75rem] uppercase leading-[0.88] tracking-[0.12em] text-paper/60 md:flex">
           <span className="text-blaze">Смены</span>
-          <span className="mt-1.5">круглый год</span>
+          <span className="mt-1.5">лето</span>
         </div>
         <div className="marquee-pause relative flex-1 overflow-hidden pl-6">
           <div className="marquee-track flex w-max" style={style}>

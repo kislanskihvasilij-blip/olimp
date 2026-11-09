@@ -1,4 +1,4 @@
-import { Dumbbell, Megaphone, Stethoscope, type LucideIcon } from "lucide-react";
+import { Dumbbell, HeartHandshake, Megaphone, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { Reveal, Scribble } from "@/components/motion/reveal";
 import { Container, SectionHeading } from "@/components/site/primitives";
@@ -41,7 +41,7 @@ export function Advantages() {
 const TEAM: { icon: LucideIcon; role: string; note: string }[] = [
   { icon: Megaphone, role: "Вожатые", note: "в каждом отряде" },
   { icon: Dumbbell, role: "Тренеры", note: "каждый день" },
-  { icon: Stethoscope, role: "Медики", note: "24/7" },
+  { icon: HeartHandshake, role: "Психолог", note: "свой кабинет" },
 ];
 
 function TeamMock() {
@@ -69,11 +69,11 @@ function TeamMock() {
 }
 
 const INTERESTS: { label: string; isOn: boolean }[] = [
-  { label: "Футбол", isOn: true },
-  { label: "Робототехника", isOn: true },
-  { label: "Плавание", isOn: false },
-  { label: "Театр", isOn: true },
-  { label: "Шахматы", isOn: false },
+  { label: "Мини-футбол", isOn: true },
+  { label: "Оригами", isOn: true },
+  { label: "Единоборства", isOn: false },
+  { label: "Мягкая игрушка", isOn: true },
+  { label: "Бисероплетение", isOn: false },
 ];
 
 function ApproachMock() {
@@ -105,7 +105,7 @@ function ApproachMock() {
 const FACILITIES: { name: string; tag: string }[] = [
   { name: "Собственный пляж", tag: "300 м" },
   { name: "Спортгородок", tag: "на территории" },
-  { name: "Медпункт", tag: "24/7" },
+  { name: "Соляная пещера", tag: "спелеокамера" },
   { name: "Столовая", tag: "5 раз в день" },
 ];
 
