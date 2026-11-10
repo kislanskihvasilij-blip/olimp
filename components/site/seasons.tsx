@@ -17,7 +17,7 @@ export function SummerShifts() {
           />
           <Reveal className="max-w-md md:justify-self-end">
             <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
-              Смены с июня по август: у каждой своя тема, а море, спорт и вечерние праздники — в каждой.
+              Смены с июня по август: у каждой своя тема, а море, спорт, вечерние праздники и «Олимпийские игры» — в каждой.
             </p>
           </Reveal>
         </div>
