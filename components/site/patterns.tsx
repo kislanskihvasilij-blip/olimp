@@ -20,9 +20,10 @@ import { cn } from "@/lib/utils";
 const COLORS = {
   blaze: "#FF5A00",
   flame: "#FFC21A",
-  paper: "#FFFFFF",
+  // paper/shale следуют теме, чтобы белые плитки не пропадали на белом фоне.
+  paper: "var(--paper)",
   sea: "#22C3B5",
-  shale: "#1C1C1C",
+  shale: "var(--shale)",
 } as const;
 
 type Color = keyof typeof COLORS;

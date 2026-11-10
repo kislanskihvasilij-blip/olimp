@@ -6,6 +6,7 @@ import { Logo, Mascot } from "@/components/brand/mascot";
 import { EASE_OUT_EXPO } from "@/components/motion/reveal";
 import { HandNote } from "@/components/site/primitives";
 import { scrollToSelector, setScrollLocked } from "@/components/site/smooth-scroll";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 import { NAV, SITE } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,7 @@ export function SiteHeader() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500",
+          "theme-dark fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500",
           isScrolled ? "border-paper/10 bg-ink/90" : "border-transparent bg-transparent",
         )}
       >
@@ -34,7 +35,8 @@ export function SiteHeader() {
           <span className="hidden font-cond text-[0.8rem] uppercase leading-[0.88] tracking-[0.16em] text-paper/60 lg:block">
             {SITE.city} · Черноморское побережье
           </span>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
+            <ThemeToggle />
             <a href={SITE.phoneHref} className="hidden text-sm text-paper/80 transition-colors hover:text-paper md:block">
               {SITE.phone}
             </a>

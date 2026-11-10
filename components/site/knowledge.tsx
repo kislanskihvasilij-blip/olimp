@@ -52,7 +52,7 @@ export function Knowledge() {
         isReversed
         duration={55}
         className="mt-20"
-        itemClassName="font-serif text-[clamp(2.5rem,7vw,6.5rem)] font-light italic leading-[1.1] text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.55)]"
+        itemClassName="font-serif text-[clamp(2.5rem,7vw,6.5rem)] font-light italic leading-[1.1] text-transparent [-webkit-text-stroke:1px_color-mix(in_oklab,var(--paper)_55%,transparent)]"
       />
     </section>
   );

@@ -27,14 +27,21 @@ export const metadata: Metadata = {
   openGraph: { title: TITLE, description: DESCRIPTION, locale: "ru_RU", type: "website" },
 };
 
+const THEME_SCRIPT = `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
+
 export const viewport: Viewport = { themeColor: "#000000", colorScheme: "dark" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
+      suppressHydrationWarning
       className={cn(onest.variable, cormorant.variable, oswald.variable, caveat.variable, unbounded.variable, "dark")}
     >
+      <head>
+        {/* Тема до первой отрисовки, чтобы светлый фон не мигал тёмным. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="grain">
         <SmoothScroll />
         {children}

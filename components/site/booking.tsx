@@ -19,7 +19,7 @@ const INPUT =
 
 export function Booking() {
   return (
-    <section id="zayavka" data-chapter="Заявка" data-chapter-index="11" className="relative overflow-hidden bg-blaze text-ink">
+    <section id="zayavka" data-chapter="Заявка" data-chapter-index="11" className="theme-dark relative overflow-hidden bg-blaze text-ink">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-4 py-24 md:px-8 md:py-32 lg:grid-cols-[1.1fr_1fr]">
         <div className="flex flex-col">
           <p className="flex items-center gap-3 font-cond text-[0.8rem] uppercase tracking-[0.12em] text-ink/70">

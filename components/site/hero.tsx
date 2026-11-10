@@ -29,7 +29,7 @@ export function Hero() {
   });
 
   return (
-    <section ref={ref} id="top" data-chapter="" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink">
+    <section ref={ref} id="top" data-chapter="" className="theme-dark relative flex min-h-[100svh] flex-col overflow-hidden bg-ink">
       <div className="absolute inset-0">
         <WaterRippleImage
           src={HERO_PHOTO}
