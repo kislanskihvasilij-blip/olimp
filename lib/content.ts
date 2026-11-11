@@ -25,7 +25,7 @@ export const PHOTOS = {
   court: photo("court"),
   volleyball: photo("volleyball"),
   games: photo("games"),
-  map: "/photos/map.webp",
+  map: "/photos/camp-map.webp", // новое имя файла = новый URL, иначе кэш оптимизатора отдаёт старую карту
   education: photo("education"),
   vocal: photo("vocal"),
   stageShow: photo("stage-show"),

@@ -3,7 +3,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Container, SectionHeading } from "@/components/site/primitives";
 import { PHOTOS } from "@/lib/content";
 
-/** Карта комплекса (иллюстрация из public/photos/map.webp). */
+/** Карта комплекса (иллюстрация из public/photos/camp-map.webp). */
 export function CampMap() {
   return (
     <section id="karta" data-chapter="Карта" data-chapter-index="05" className="border-t border-paper/10 py-16 md:py-36">
@@ -12,8 +12,8 @@ export function CampMap() {
           <SectionHeading index="05" kicker="Карта комплекса" lines={["Всё рядом —", "от корпусов до моря"]} note="пять гектаров в сосновом лесу" />
           <Reveal className="max-w-md md:justify-self-end">
             <p className="text-base leading-[1.65] text-paper/70 md:text-lg">
-              Спальный и лечебный корпуса, столовые, футбольное поле, площадки для баскетбола и пляжного волейбола, а за
-              дорогой и полосой соснового леса — собственный пляж.
+              Спальный и лечебный корпуса, столовая, открытая сцена «Колизей», футбольное поле, площадки для баскетбола и
+              пляжного волейбола, а за дорогой и полосой соснового леса — собственный пляж.
             </p>
           </Reveal>
         </div>
@@ -24,7 +24,7 @@ export function CampMap() {
             <div className="relative aspect-[1538/1023] min-w-[720px] overflow-hidden border border-paper/15 md:min-w-0">
               <Image
                 src={PHOTOS.map}
-                alt="Карта комплекса «Олимпиец»: спальный, лечебный, административный и круглый корпуса, столовые, хоздвор, футбольное поле, площадки для пляжного волейбола и баскетбола, через дорогу — пляж у моря"
+                alt="Карта комплекса «Олимпиец»: спальный, лечебный и административный корпуса, столовая, открытая сцена «Колизей», хоздвор, футбольное поле, площадки для пляжного волейбола и баскетбола, памятник Ленину, через дорогу — пляж у моря"
                 fill
                 sizes="(min-width: 1600px) 1536px, (min-width: 768px) 100vw, 720px"
                 className="object-cover"
