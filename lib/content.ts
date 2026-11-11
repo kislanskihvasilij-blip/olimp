@@ -22,13 +22,10 @@ export const PHOTOS = {
   beachPlay: photo("beach-play"),
   football: photo("football"),
   olympicGames: photo("olympic-games"),
-  stadium: photo("stadium"),
   court: photo("court"),
   volleyball: photo("volleyball"),
   games: photo("games"),
-  cheer: photo("cheer"),
-  group: photo("group"),
-  fireShow: photo("fire-show"),
+  map: "/photos/map.webp",
   education: photo("education"),
   vocal: photo("vocal"),
   stageShow: photo("stage-show"),
@@ -57,7 +54,7 @@ export type NavItem = { href: `#${string}`; label: string };
 export const NAV: NavItem[] = [
   { href: "#smeny", label: "Смены" },
   { href: "#o-komplekse", label: "О комплексе" },
-  { href: "#putevki", label: "Путёвки" },
+  { href: "#karta", label: "Карта" },
   { href: "#sport", label: "Спорт" },
   { href: "#znaniya", label: "Знания" },
   { href: "#partneram", label: "Партнёрам" },
@@ -66,64 +63,17 @@ export const NAV: NavItem[] = [
   { href: "#kontakty", label: "Контакты" },
 ];
 
-/** Летние смены — комплекс работает только летом (даты и темы — демонстрационные). */
-export type Shift = {
-  number: string;
-  title: string;
-  dates: string;
-  tag: string;
-  text: string;
-  photo: string;
-  alt: string;
-};
+/** Летние смены — комплекс работает только летом. Даты «ДД.ММ». */
+export type Shift = { title: string; start: string; end: string; photo: string; alt: string };
 
 export const SHIFTS: Shift[] = [
-  {
-    number: "01",
-    title: "Олимпийский старт",
-    dates: "01.06 — 18.06",
-    tag: "спорт",
-    text: "Открытие лета: спартакиада отрядов, первые старты и знакомство с морем.",
-    photo: PHOTOS.football,
-    alt: "Футбольная тренировка на поле «Олимпийца»",
-  },
-  {
-    number: "02",
-    title: "Морской бриз",
-    dates: "20.06 — 07.07",
-    tag: "море",
-    text: "Пляж, морские игры и квесты на побережье — смена для тех, кто не вылезает из воды.",
-    photo: PHOTOS.beachPlay,
-    alt: "Девочки в жёлтых кепках играют в песке на пляже",
-  },
-  {
-    number: "03",
-    title: "Звёздный экспресс",
-    dates: "09.07 — 26.07",
-    tag: "творчество",
-    text: "Сцена, студии и мастерские: каждый вечер — концерт, в финале — большое шоу талантов.",
-    photo: PHOTOS.stageShow,
-    alt: "Ребята в костюмах на вечернем представлении",
-  },
-  {
-    number: "04",
-    title: "Чемпионы лета",
-    dates: "28.07 — 14.08",
-    tag: "турниры",
-    text: "Спартакиада и турниры отрядов по всем видам спорта — смена для тех, кто любит побеждать.",
-    photo: PHOTOS.olympicGames,
-    alt: "Мальчик на церемонии Олимпийских игр лагеря",
-  },
-  {
-    number: "05",
-    title: "До встречи, лето!",
-    dates: "16.08 — 31.08",
-    tag: "финал",
-    text: "Последняя смена сезона: огненное шоу, прощальный концерт и обещание вернуться.",
-    photo: PHOTOS.fireShow,
-    alt: "Вечернее огненное шоу в лагере",
-  },
+  { title: "1 смена", start: "01.06", end: "21.06", photo: PHOTOS.football, alt: "Футбольная тренировка на поле «Олимпийца»" },
+  { title: "2 смена", start: "24.06", end: "14.07", photo: PHOTOS.beachPlay, alt: "Девочки в жёлтых кепках играют в песке на пляже" },
+  { title: "3 смена", start: "17.07", end: "06.08", photo: PHOTOS.stageShow, alt: "Ребята в костюмах на вечернем представлении" },
+  { title: "4 смена", start: "09.08", end: "29.08", photo: PHOTOS.olympicGames, alt: "Мальчик на церемонии Олимпийских игр лагеря" },
 ];
+
+export const shiftDates = (shift: Shift): string => `${shift.start} — ${shift.end}`;
 
 export const SHIFT_TITLES: readonly string[] = SHIFTS.map((shift) => shift.title);
 
@@ -163,46 +113,6 @@ export const ADVANTAGES: { id: AdvantageId; label: string; title: string; text: 
     label: "Каждый день",
     title: "Праздник по расписанию",
     text: "Концерты, спектакли, дискотеки и турниры — каждый день смены наполнен событиями.",
-  },
-];
-
-export type Program = {
-  index: string;
-  title: string;
-  text: string;
-  price: string;
-  duration: string;
-  photo: string;
-  alt: string;
-};
-
-export const PROGRAMS: Program[] = [
-  {
-    index: "01",
-    title: "Оздоровительные смены",
-    text: "Море, солнце, режим, медицинское сопровождение и спелеокамера «Соляная пещера» — программа, после которой ребёнок возвращается окрепшим.",
-    price: "от 48 900 ₽",
-    duration: "21 день",
-    photo: PHOTOS.cheer,
-    alt: "Ребята в кепках радуются на пляже",
-  },
-  {
-    index: "02",
-    title: "Лагерные смены",
-    text: "Вожатые, отрядные дела, спорт, дискотеки и общелагерные события — классическая смена, о которой рассказывают весь год.",
-    price: "от 39 900 ₽",
-    duration: "21 день",
-    photo: PHOTOS.group,
-    alt: "Отряд «Олимпийца» на общей фотографии",
-  },
-  {
-    index: "03",
-    title: "Организованные группы",
-    text: "Спортивные сборы, тематические выезды и школьные поездки: подстроим программу, питание и расписание под ваш запрос.",
-    price: "по запросу",
-    duration: "от 5 дней",
-    photo: PHOTOS.stadium,
-    alt: "Тренировка на поле спортгородка «Олимпийца»",
   },
 ];
 

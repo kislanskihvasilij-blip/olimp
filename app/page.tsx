@@ -8,11 +8,11 @@ import { Footer } from "@/components/site/footer";
 import { SiteHeader } from "@/components/site/header";
 import { Hero } from "@/components/site/hero";
 import { Knowledge } from "@/components/site/knowledge";
+import { CampMap } from "@/components/site/map";
+import { ShiftSchedule } from "@/components/site/schedule";
 import { Partners } from "@/components/site/partners";
 import { PatternBand } from "@/components/site/patterns";
-import { Programs } from "@/components/site/programs";
 import { Reviews } from "@/components/site/reviews";
-import { SummerShifts } from "@/components/site/seasons";
 import { Sport } from "@/components/site/sport";
 
 export default function Home() {
@@ -23,13 +23,13 @@ export default function Home() {
       <main className="overflow-x-clip">
         <Hero />
         <PatternBand variant="heroSeasons" />
-        <SummerShifts />
+        <ShiftSchedule />
         <PatternBand variant="seasonsAbout" />
         <About />
         <PatternBand variant="aboutAdvantages" />
         <Advantages />
         <PatternBand variant="advantagesPrograms" />
-        <Programs />
+        <CampMap />
         <PatternBand variant="programsSport" />
         <Sport />
         <PatternBand variant="sportKnowledge" />

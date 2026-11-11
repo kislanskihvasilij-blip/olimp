@@ -8,7 +8,7 @@ import { AnimatedMascot } from "@/components/brand/animated-mascot";
 import { EASE_OUT_EXPO, Scribble } from "@/components/motion/reveal";
 import { CtaLink, HandNote } from "@/components/site/primitives";
 import WaterRippleImage from "@/components/ui/water-ripple-image";
-import { HERO_PHOTO, SHIFTS, SITE } from "@/lib/content";
+import { HERO_PHOTO, SHIFTS, SITE, shiftDates } from "@/lib/content";
 
 const WORDMARK = Array.from("Олимпиец");
 const LETTER_DELAY = 0.06;
@@ -88,8 +88,8 @@ export function Hero() {
           </motion.div>
           <motion.div {...fadeUp(1.05)} className="flex flex-wrap gap-3 md:justify-center">
             <CtaLink href="#zayavka">Оставить заявку</CtaLink>
-            <CtaLink href="#putevki" variant="ghost">
-              Путёвки
+            <CtaLink href="#smeny" variant="ghost">
+              Расписание
             </CtaLink>
           </motion.div>
           <motion.div {...fadeUp(1.2)} className="hidden items-end justify-end gap-1 md:flex">
@@ -114,7 +114,7 @@ function ShiftReel() {
     <ul aria-hidden={isClone || undefined} className="flex shrink-0 items-center gap-10 py-4 pr-10">
       {SHIFTS.map((shift) => (
         <li key={shift.title}>
-          <a href="#putevki" tabIndex={isClone ? -1 : undefined} className="group/item flex items-center gap-4">
+          <a href="#smeny" tabIndex={isClone ? -1 : undefined} className="group/item flex items-center gap-4">
             <span className="relative h-12 w-[72px] shrink-0 overflow-hidden">
               <Image
                 src={shift.photo}
@@ -126,10 +126,10 @@ function ShiftReel() {
             </span>
             <span className="flex flex-col gap-1.5 whitespace-nowrap">
               <span className="text-sm uppercase tracking-[0.02em] transition-colors group-hover/item:text-blaze">
-                «{shift.title}»
+                {shift.title}
               </span>
               <span className="font-cond text-[0.8rem] leading-[0.88] text-paper/55">
-                {shift.dates} · {shift.tag}
+                {shiftDates(shift)}
               </span>
             </span>
           </a>

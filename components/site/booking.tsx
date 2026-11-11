@@ -7,7 +7,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { AnimatedMascot } from "@/components/brand/animated-mascot";
 import { Scribble } from "@/components/motion/reveal";
-import { CHILD_AGES, SHIFTS, SITE } from "@/lib/content";
+import { CHILD_AGES, SHIFTS, SITE, shiftDates } from "@/lib/content";
 import { EMPTY_LEAD, formatPhone, validateLead, type LeadErrors, type LeadInput } from "@/lib/lead";
 import { cn } from "@/lib/utils";
 
@@ -142,7 +142,7 @@ function BookingForm() {
             <option value="">Пока не знаю</option>
             {SHIFTS.map((shift) => (
               <option key={shift.title} value={shift.title}>
-                «{shift.title}» · {shift.dates}
+                {shift.title} · {shiftDates(shift)}
               </option>
             ))}
           </select>
