@@ -8,7 +8,7 @@
  * Студии: «Умелые ручки», «Оригами», «Мягкая игрушка», «Роспись на камнях», лепка,
  * бисероплетение; библиотека, кабинет психолога, игровые комнаты с настольными играми.
  *
- * ВНИМАНИЕ: телефон, e-mail, цены, даты смен и отзывы — демонстрационные.
+ * ВНИМАНИЕ: телефон, e-mail, цены и отзывы — демонстрационные.
  * Перед запуском замените их реальными данными комплекса.
  */
 
@@ -34,6 +34,8 @@ export const PHOTOS = {
 /** Фон hero для WebGL-ряби (локальный файл — без CORS-ограничений). */
 export const HERO_PHOTO = PHOTOS.beachRun;
 
+const ADDRESS = "Анапа, Пионерский проспект, 247";
+
 export const SITE = {
   name: "Олимпиец",
   short: "ДОК «Олимпиец»",
@@ -42,11 +44,11 @@ export const SITE = {
   phone: "+7 (900) 000-00-00",
   phoneHref: "tel:+79000000000",
   email: "info@dk-olimpiec.ru",
-  address: "Анапа, Краснодарский край",
+  address: ADDRESS,
   hours: "пн–пт, 8:00–17:00",
   directorHours: "вт, чт — 9:00–11:00",
   instagram: "https://www.instagram.com/olimpiec_anapa/",
-  mapUrl: `https://yandex.ru/maps/?text=${encodeURIComponent("детский лагерь Олимпиец Анапа")}`,
+  mapUrl: `https://yandex.ru/maps/?text=${encodeURIComponent(ADDRESS)}`,
 } as const;
 
 export type NavItem = { href: `#${string}`; label: string };
